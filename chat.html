@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:#0b141a;height:100vh;display:flex;flex-direction:column;}
+.header{background:#202c33;padding:12px 15px;display:flex;align-items:center;border-bottom:1px solid #2a3942;position:relative;}
+.back-btn{color:white;font-size:24px;cursor:pointer;margin-right:12px;text-decoration:none;}
+#chatPhoto{width:45px;height:45px;border-radius:50%;object-fit:cover;}
+.user-info{margin-left:15px;flex:1;}
+.user-info h3{color:white;font-size:18px;}
+.user-info p{color:#8696a0;font-size:14px;}
+.menu-btn{color:white;font-size:24px;cursor:pointer;padding:5px;}
+.menu{display:none;position:absolute;right:10px;top:60px;background:#202c33;border-radius:8px;overflow:hidden;z-index:1000;box-shadow:0 0 10px rgba(0,0,0,.5);}
+.menu button{width:180px;padding:12px;border:none;background:none;color:white;text-align:left;cursor:pointer;display:block;}
+.menu button:hover{background:#2a3942;}
+.chat-box{flex:1;padding:15px;overflow-y:auto;display:flex;flex-direction:column;}
+.message{max-width:80%;padding:10px 15px;margin-bottom:12px;border-radius:10px;word-wrap:break-word;position:relative;}
+.sent{background:#005c4b;color:white;align-self:flex-end;}
+.received{background:#202c33;color:white;align-self:flex-start;}
+.time{display:block;font-size:11px;margin-top:5px;opacity:.8;text-align:right;}
+.input-area{background:#202c33;padding:10px;display:flex;align-items:center;gap:8px;}
+.input-area input{flex:1;padding:14px;border:none;outline:none;border-radius:25px;background:#2a3942;color:white;font-size:16px;}
+.btn{background:#25d366;border:none;width:45px;height:45px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;color:white;flex-shrink:0;}
+.chat-image{max-width:220px;border-radius:10px;}
+audio{max-width:220px;}
+.msg-menu{position:absolute;top:5px;right:5px;font-size:16px;cursor:pointer;display:none;color:white;}
+.message:hover .msg-menu{display:block;}
+.context-menu{position:fixed;display:none;background:#202c33;border-radius:8px;overflow:hidden;z-index:9999;box-shadow:0 0 10px rgba(0,0,0,.5);}
+.context-menu button{display:block;width:220px;padding:12px;border:none;background:none;color:white;text-align:left;cursor:pointer;}
+.context-menu button:hover{background:#2a3942;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a class="back-btn" href="home.html">←</a>
+  <img id="chatPhoto" src="https://placehold.co/45x45/2a3942/8696a0?text=U">
+  <div class="user-info">
+    <h3 id="chatUser">User</h3>
+    <p>Online</p>
+  </div>
+  <div class="menu-btn" id="menuBtn">⋮</div>
+  <div class="menu" id="menu">
+    <button id="clearChatBtn">🗑 Clear Chat</button>
+    <button onclick="window.location.href='settings.html'">⚙ Settings</button>
+  </div>
+</div>
+
+<div id="chatBox" class="chat-box"></div>
+
+<div class="input-area">
+  <button class="btn" id="fileBtn">📎</button>
+  <input type="file" id="fileInput" style="display:none;">
+  <input type="text" id="msgInput" placeholder="Type a message">
+  <button class="btn" id="emojiBtn">😊</button>
+  <button class="btn" id="voiceBtn">🎤</button>
+  <button class="btn" id="sendBtn">➤</button>
+</div>
+
+<div id="msgMenu" class="context-menu">
+  <button id="editMsgBtn">✏ Edit Message</button>
+  <button id="deleteMeBtn">🗑 Delete For Me</button>
+  <button id="deleteAllBtn">❌ Delete For Everyone</button>
+</div>
+
+<script>
+  const menuBtn = document.getElementById("menuBtn");
+  const menu    = document.getElementById("menu");
+  menuBtn.onclick = () => {
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  };
+  window.addEventListener("click", (e) => {
+    if(!e.target.matches("#menuBtn")) menu.style.display = "none";
+  });
+</script>
+
+<script type="module" src="./chat.js"></script>
+</body>
+</html>

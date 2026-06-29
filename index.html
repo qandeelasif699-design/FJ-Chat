@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Chat Login</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:#0b141a;display:flex;justify-content:center;align-items:center;min-height:100vh;}
+.container{width:90%;max-width:400px;background:#202c33;padding:35px;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,0.5);}
+h1{text-align:center;color:#25d366;margin-bottom:30px;font-size:32px;}
+.input-box{margin-bottom:20px;}
+.input-box input{width:100%;padding:15px;border:none;outline:none;border-radius:8px;background:#2a3942;color:white;font-size:17px;}
+.input-box input::placeholder{color:#8696a0;}
+button{width:100%;padding:15px;border:none;border-radius:8px;font-size:18px;cursor:pointer;margin-top:10px;}
+.login-btn{background:#25d366;color:white;}
+.signup-btn{background:#111b21;color:white;border:1px solid #25d366;}
+.switch-btn{background:#e74c3c;color:white;font-size:14px;padding:10px;}
+button:hover{opacity:0.9;}
+#errMsg{color:#e74c3c;font-size:13px;text-align:center;margin-top:12px;min-height:18px;}
+.divider{border:none;border-top:1px solid #2a3942;margin:20px 0;}
+.already-text{color:#8696a0;font-size:13px;text-align:center;margin-bottom:8px;}
+.already-text span{color:#25d366;font-weight:bold;}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Web Chat</h1>
+
+  <div class="input-box">
+    <input type="email" id="email" placeholder="Email">
+  </div>
+  <div class="input-box">
+    <input type="password" id="password" placeholder="Password">
+  </div>
+
+  <button class="login-btn" id="loginBtn">Login</button>
+  <button class="signup-btn" id="signupBtn">Sign Up</button>
+
+  <div id="errMsg"></div>
+</div>
+
+<script type="module">
+import { auth, db } from "./config.js";
+import {
+  onAuthStateChanged, signOut,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const errMsg = document.getElementById("errMsg");
+
+function showErr(m){
+  errMsg.textContent = m;
+  setTimeout(()=>{ errMsg.textContent=""; }, 4000);
+}
+
+// Agar pehle se logged in hai to seedha home bhejo
+onAuthStateChanged(auth, user => {
+  if(user) window.location.href = "home.html";
+});
+
+document.getElementById("loginBtn").addEventListener("click", async ()=>{
+  const e = document.getElementById("email").value.trim();
+  const p = document.getElementById("password").value.trim();
+  if(!e||!p){ showErr("Email aur password likho!"); return; }
+  try{
+    await signInWithEmailAndPassword(auth, e, p);
+    window.location.href = "home.html";
+  }catch(err){ showErr(err.message); }
+});
+
+document.getElementById("signupBtn").addEventListener("click", async ()=>{
+  const e = document.getElementById("email").value.trim();
+  const p = document.getElementById("password").value.trim();
+  if(!e||!p){ showErr("Email aur password likho!"); return; }
+  try{
+    const cred = await createUserWithEmailAndPassword(auth, e, p);
+    await setDoc(doc(db,"users",cred.user.uid),{
+      uid: cred.user.uid,
+      email: cred.user.email,
+      name: e.split("@")[0],
+      photoURL: ""
+    });
+    window.location.href = "home.html";
+  }catch(err){ showErr(err.message); }
+});
+
+
+</script>
+</body>
+</html>

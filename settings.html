@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings</title>
+<style>
+body{margin:0;font-family:Arial;background:#0b141a;color:white;}
+.container{max-width:420px;margin:auto;padding:20px;}
+.back-btn{color:white;font-size:24px;cursor:pointer;text-decoration:none;display:inline-block;margin-bottom:15px;}
+.card{background:#202c33;padding:25px;border-radius:10px;text-align:center;}
+.card h2{margin-bottom:20px;color:#25d366;}
+#profilePic{width:100px;height:100px;border-radius:50%;object-fit:cover;background:#2a3942;margin-bottom:10px;}
+input[type="file"]{width:100%;padding:10px;margin-top:10px;border:none;border-radius:8px;background:#2a3942;color:#8696a0;cursor:pointer;}
+input[type="text"]{width:100%;padding:12px;margin-top:10px;border:none;border-radius:8px;background:#2a3942;color:white;font-size:15px;outline:none;}
+input[type="text"]::placeholder{color:#8696a0;}
+button{margin-top:12px;padding:12px;width:100%;border:none;border-radius:8px;font-size:16px;cursor:pointer;}
+#saveBtn{background:#25d366;color:white;}
+#logoutBtn{background:#e74c3c;color:white;}
+button:hover{opacity:0.9;}
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back-btn" href="home.html">← Back</a>
+  <div class="card">
+    <h2>Settings</h2>
+    <img id="profilePic" src="https://placehold.co/100x100/2a3942/8696a0?text=U" onerror="this.src='https://placehold.co/100x100/2a3942/8696a0?text=U'">
+    <input type="file" id="fileInput" accept="image/*">
+    <input type="text" id="nameInput" placeholder="Apna naam likho">
+    <button id="saveBtn">Save Profile</button>
+    <button id="logoutBtn">Logout</button>
+  </div>
+</div>
+<script type="module" src="./settings.js"></script>
+</body>
+</html>

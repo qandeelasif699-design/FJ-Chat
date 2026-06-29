@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Chat</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:#111b21;height:100vh;}
+.sidebar{width:100%;max-width:420px;height:100vh;background:#202c33;display:flex;flex-direction:column;}
+.top-bar{padding:15px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #2a3942;flex-shrink:0;}
+.profile{display:flex;align-items:center;gap:10px;}
+.profile h3{color:white;font-size:18px;}
+.buttons{display:flex;align-items:center;gap:15px;}
+.buttons button{background:none;border:none;color:white;font-size:22px;cursor:pointer;}
+.search-box{padding:10px;background:#111b21;flex-shrink:0;}
+.search-box input{width:100%;padding:13px;border:none;outline:none;border-radius:8px;background:#202c33;color:white;font-size:16px;}
+#userList{flex:1;overflow-y:auto;}
+
+/* Add contact modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center;}
+.modal-overlay.show{display:flex;}
+.modal{background:#202c33;border-radius:12px;padding:24px;width:90%;max-width:360px;}
+.modal h3{color:white;margin-bottom:16px;font-size:18px;}
+.modal input{width:100%;padding:12px;border:none;outline:none;border-radius:8px;background:#2a3942;color:white;font-size:15px;margin-bottom:12px;}
+.modal input::placeholder{color:#8696a0;}
+.modal-btns{display:flex;gap:10px;}
+.modal-btns button{flex:1;padding:12px;border:none;border-radius:8px;font-size:15px;cursor:pointer;}
+.btn-cancel{background:#2a3942;color:#8696a0;}
+.btn-add{background:#25d366;color:white;font-weight:600;}
+#addResult{font-size:13px;margin-top:8px;text-align:center;min-height:18px;}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="top-bar">
+    <div class="profile">
+      <h3>Web Chat</h3>
+    </div>
+    <div class="buttons">
+      <!-- Add Contact -->
+      <button id="addContactBtn" title="Contact add karo">➕</button>
+      <button onclick="window.location.href='settings.html'" title="Settings">⚙️</button>
+      <button id="logoutBtn" title="Logout">🚪</button>
+    </div>
+  </div>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search contacts">
+  </div>
+  <div id="userList"></div>
+</div>
+
+<!-- Add Contact Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>➕ Contact Add karo</h3>
+    <input type="email" id="contactEmail" placeholder="Email address likho (e.g. ali@gmail.com)">
+    <div id="addResult"></div>
+    <div class="modal-btns">
+      <button class="btn-cancel" id="cancelBtn">Cancel</button>
+      <button class="btn-add" id="confirmAddBtn">Add karo</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="./home.js"></script>
+</body>
+</html>
